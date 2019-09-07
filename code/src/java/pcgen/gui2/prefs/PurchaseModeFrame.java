@@ -57,13 +57,14 @@ import pcgen.core.RuleConstants;
 import pcgen.core.SettingsHandler;
 import pcgen.core.utils.MessageType;
 import pcgen.core.utils.ShowMessageDelegate;
-import pcgen.gui3.GuiUtility;
 import pcgen.gui3.JFXPanelFromResource;
 import pcgen.gui3.component.OKCloseButtonBar;
 import pcgen.gui3.dialog.NewPurchaseMethodDialogController;
 import pcgen.rules.context.AbstractReferenceContext;
 import pcgen.system.LanguageBundle;
 
+import javafx.embed.swing.JFXPanel;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.Tooltip;
@@ -389,7 +390,7 @@ public final class PurchaseModeFrame extends JDialog
 		resetButton.setText(LanguageBundle.getString("in_Prefs_Reset"));
 		resetButton.setOnAction(evt -> resetButtonActionPerformed());
 		resetButton.setTooltip(new Tooltip(LanguageBundle.getString("in_Prefs_ResetTip")));
-		ButtonBar.setButtonData(resetButton, ButtonBar.ButtonData.BACK_PREVIOUS);
+		buttonBar.setButtonData(resetButton, ButtonBar.ButtonData.BACK_PREVIOUS);
 		buttonBar.getButtons().add(resetButton);
 		buttonBar.getOkButton().setTooltip(new Tooltip(LanguageBundle.getString("in_Prefs_OKTip")));
 		okButton.addActionListener(evt -> okButtonActionPerformed());
@@ -402,7 +403,10 @@ public final class PurchaseModeFrame extends JDialog
 		bagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		bagConstraints.anchor = GridBagConstraints.EAST;
 		bagConstraints.weightx = 1.0;
-		getContentPane().add(GuiUtility.wrapParentAsJFXPanel(buttonBar), bagConstraints);
+
+		JFXPanel buttonPanel = new JFXPanel();
+		buttonPanel.setScene(new Scene(buttonBar));
+		getContentPane().add(buttonPanel, bagConstraints);
 
 		jScrollPane1.setViewportBorder(new BevelBorder(BevelBorder.LOWERED));
 		jScrollPane1.setPreferredSize(new Dimension(100, 200));
